@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparativa de Plataformas Git | GitHub, GitLab, Bitbucket</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --github-color: #2188ff;
+            --github-dark: #0366d6;
+            --gitlab-color: #fc6d26;
+            --gitlab-dark: #e24329;
+            --bitbucket-color: #0052cc;
+            --bitbucket-dark: #0747a6;
+            --primary-bg: #0d1117;
+            --secondary-bg: #161b22;
+            --card-bg: #21262d;
+            --text-color: #e6edf3;
+            --text-muted: #8b949e;
+            --border-radius: 10px;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            --border-color: rgba(240, 246, 252, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* HEADER */
+        .hero {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 150%, var(--github-color) 0%, transparent 25%),
+                       radial-gradient(circle at 50% -50%, var(--gitlab-color) 0%, transparent 25%),
+                       radial-gradient(circle at 80% 150%, var(--bitbucket-color) 0%, transparent 25%);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--github-color), var(--gitlab-color), var(--bitbucket-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .hexagon-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%239C92AC' fill-opacity='1'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .intro {
+            background-color: var(--secondary-bg);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 3rem;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .intro h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .intro h2:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--github-color), var(--gitlab-color));
+            border-radius: 4px;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--github-color), var(--gitlab-color), var(--bitbucket-color));
+            margin: 1rem auto 0;
+            border-radius: 4px;
+        }
+
+        /* PLATFORM CARDS */
+        .platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .platform-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .platform-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .github-header {
+            background: linear-gradient(135deg, #040d21 0%, #0d1117 100%);
+            border-bottom: 4px solid var(--github-color);
+        }
+
+        .gitlab-header {
+            background: linear-gradient(135deg, #1a1e22 0%, #171321 100%);
+            border-bottom: 4px solid var(--gitlab-color);
+        }
+
+        .bitbucket-header {
+            background: linear-gradient(135deg, #09326c 0%, #0747a6 100%);
+            border-bottom: 4px solid var(--bitbucket-color);
+        }
+
+        .card-header:before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .platform-logo {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+        }
+
+        .platform-logo img {
+            height: 100%;
+            width: auto;
+        }
+
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-placeholder i {
+            font-size: 2rem;
+        }
+
+        .github-icon {
+            color: #24292e;
+        }
+
+        .gitlab-icon {
+            color: var(--gitlab-dark);
+        }
+
+        .bitbucket-icon {
+            color: var(--bitbucket-dark);
+        }
+
+        .card-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .card-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .github-features li:before {
+            content: "\f09b";
+            font-family: "Font Awesome 6 Brands";
+            margin-right: 0.8rem;
+            color: var(--github-color);
+        }
+
+        .gitlab-features li:before {
+            content: "\f296";
+            font-family: "Font Awesome 6 Brands";
+            margin-right: 0.8rem;
+            color: var(--gitlab-color);
+        }
+
+        .bitbucket-features li:before {
+            content: "\f171";
+            font-family: "Font Awesome 6 Brands";
+            margin-right: 0.8rem;
+            color: var(--bitbucket-color);
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .pros, .cons {
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pros h3, .cons h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .pros h3:before, .cons h3:before {
+            font-family: "Font Awesome 6 Free";
+            margin-right: 0.5rem;
+            font-size: 1rem;
+            font-weight: 900;
+        }
+
+        .pros h3:before {
+            content: "\f00c";
+            color: #3fb950;
+        }
+
+        .cons h3:before {
+            content: "\f00d";
+            color: #f85149;
+        }
+
+        .pros ul, .cons ul {
+            list-style: none;
+        }
+
+        .pros li, .cons li {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .pros li:before, .cons li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+        }
+
+        /* COMPARISON TABLE */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .comparison-table thead {
+            background-color: var(--secondary-bg);
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-table tbody tr {
+            background-color: var(--card-bg);
+            transition: background-color 0.2s ease;
+        }
+
+        .comparison-table tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .github-col {
+            width: 22%;
+            background-color: rgba(33, 136, 255, 0.03);
+        }
+
+        .gitlab-col {
+            width: 22%;
+            background-color: rgba(252, 109, 38, 0.02);
+        }
+
+        .bitbucket-col {
+            width: 22%;
+            background-color: rgba(0, 82, 204, 0.02);
+        }
+
+        .feature-col {
+            width: 34%;
+        }
+
+        .check {
+            color: #3fb950;
+            font-size: 1.2rem;
+        }
+
+        .limited {
+            color: #d29922;
+        }
+
+        .no {
+            color: #f85149;
+        }
+
+        /* USAGE CASES */
+        .use-cases {
+            background-color: var(--secondary-bg);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            margin-top: 3rem;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .use-cases h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .use-cases h2:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--bitbucket-color), var(--github-color));
+            border-radius: 4px;
+        }
+
+        .use-cases ul {
+            list-style: none;
+        }
+
+        .use-cases li {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .use-cases li:before {
+            content: "\f061";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        /* PRICING TABLE */
+        .pricing-section {
+            margin-top: 4rem;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .pricing-table thead {
+            background-color: var(--secondary-bg);
+        }
+
+        .pricing-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pricing-table tbody tr {
+            background-color: var(--card-bg);
+        }
+
+        .pricing-highlight {
+            font-weight: 700;
+        }
+
+        /* CONCLUSION */
+        .conclusion {
+            background-color: var(--secondary-bg);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            margin-top: 3rem;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .conclusion h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .conclusion h2:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--github-color), var(--gitlab-color));
+            border-radius: 4px;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--secondary-bg);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            color: var(--text-muted);
+        }
+
+        /* RESPONSIVE */
+        @media screen and (max-width: 768px) {
+            .platforms {
+                grid-template-columns: 1fr;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .platform-col, .feature-col {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hexagon-grid"></div>
+    <div class="hero-content">
+        <h1>Plataformas de Control de Versiones</h1>
+        <p>Comparativa detallada entre GitHub, GitLab y Bitbucket - Las principales herramientas para gestionar tu código</p>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Introduction -->
+    <section class="intro">
+        <h2>¿Por qué usar una plataforma de control de versiones?</h2>
+        <p>Las plataformas de control de versiones se han convertido en una herramienta fundamental para cualquier equipo de desarrollo. Permiten mantener un historial detallado de cambios, facilitan la colaboración entre desarrolladores, y proporcionan herramientas para gestionar el ciclo de vida completo del desarrollo de software.</p>
+        <p>En esta comparativa, analizaremos las tres plataformas más populares: <strong>GitHub</strong>, <strong>GitLab</strong> y <strong>Bitbucket</strong>, para ayudarte a elegir la que mejor se adapte a tus necesidades específicas.</p>
+    </section>
+
+    <!-- Platforms Section -->
+    <section>
+        <h2 class="section-title">Las Plataformas</h2>
+        <div class="platforms">
+            <!-- GitHub Card -->
+            <div class="platform-card">
+                <div class="card-header github-header">
+                    <div class="card-title">
+                        <h2>GitHub</h2>
+                        <span class="tagline">La plataforma social para desarrolladores</span>
+                    </div>
+                    <div class="logo-placeholder">
+                        <i class="fab fa-github github-icon"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>Fundada en 2008 y adquirida por Microsoft en 2018, GitHub se ha convertido en el hogar de más de 100 millones de repositorios y la plataforma preferida para proyectos de código abierto.</p>
+
+                    <h3>Características principales</h3>
+                    <ul class="feature-list github-features">
+                        <li>GitHub Actions: Automatización de CI/CD</li>
+                        <li>GitHub Pages: Hospedaje gratuito de sitios estáticos</li>
+                        <li>GitHub Copilot: Asistente de IA para programación</li>
+                        <li>GitHub Discussions: Foros para comunidades</li>
+                        <li>GitHub Codespaces: Entornos de desarrollo en la nube</li>
+                        <li>GitHub Advanced Security: Análisis de vulnerabilidades</li>
+                    </ul>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h3>Ventajas</h3>
+                            <ul>
+                                <li>La mayor comunidad de desarrolladores</li>
+                                <li>Interfaz intuitiva y moderna</li>
+                                <li>Integración con miles de herramientas</li>
+                                <li>Excelente documentación</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h3>Desventajas</h3>
+                            <ul>
+                                <li>CI/CD menos robusto que GitLab</li>
+                                <li>Menos flexibilidad en despliegues privados</li>
+                                <li>Pocas funciones de gestión de proyectos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitLab Card -->
+            <div class="platform-card">
+                <div class="card-header gitlab-header">
+                    <div class="card-title">
+                        <h2>GitLab</h2>
+                        <span class="tagline">La plataforma DevOps todo en uno</span>
+                    </div>
+                    <div class="logo-placeholder">
+                        <i class="fab fa-gitlab gitlab-icon"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>Fundada en 2011, GitLab ofrece un conjunto completo de herramientas DevOps, desde la planificación del proyecto hasta la implementación y monitoreo, todo en una sola aplicación.</p>
+
+                    <h3>Características principales</h3>
+                    <ul class="feature-list gitlab-features">
+                        <li>CI/CD integrado: Sistema de pipelines completo</li>
+                        <li>Auto DevOps: Configuración automática de CI/CD</li>
+                        <li>Container Registry: Registro Docker integrado</li>
+                        <li>Value Stream Analytics: Métricas de rendimiento</li>
+                        <li>GitLab Pages: Hospedaje de sitios estáticos</li>
+                        <li>Security Dashboard: Análisis de vulnerabilidades</li>
+                    </ul>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h3>Ventajas</h3>
+                            <ul>
+                                <li>Solución DevOps completa integrada</li>
+                                <li>Excelentes herramientas de CI/CD</li>
+                                <li>Opción de auto-hospedaje (self-hosted)</li>
+                                <li>Plan gratuito generoso</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h3>Desventajas</h3>
+                            <ul>
+                                <li>Interfaz más compleja</li>
+                                <li>Comunidad más pequeña que GitHub</li>
+                                <li>Menos integraciones con terceros</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bitbucket Card -->
+            <div class="platform-card">
+                <div class="card-header bitbucket-header">
+                    <div class="card-title">
+                        <h2>Bitbucket</h2>
+                        <span class="tagline">Integración con el ecosistema Atlassian</span>
+                    </div>
+                    <div class="logo-placeholder">
+                        <i class="fab fa-bitbucket bitbucket-icon"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>Adquirida por Atlassian en 2010, Bitbucket ofrece una integración perfecta con otras herramientas de Atlassian como Jira y Confluence, ideal para equipos que ya utilizan estos productos.</p>
+
+                    <h3>Características principales</h3>
+                    <ul class="feature-list bitbucket-features">
+                        <li>Bitbucket Pipelines: CI/CD en la nube</li>
+                        <li>Integración con Jira: Vinculación directa</li>
+                        <li>Code Insights: Análisis de calidad de código</li>
+                        <li>IP Allowlisting: Control de acceso IP</li>
+                        <li>Pull Request aprovación: Flujos de revisión</li>
+                        <li>Deployments: Gestión de despliegues</li>
+                    </ul>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h3>Ventajas</h3>
+                            <ul>
+                                <li>Integración perfecta con Jira y Confluence</li>
+                                <li>Repositorios privados ilimitados</li>
+                                <li>Soporte para repositorios Mercurial</li>
+                                <li>Permisos granulares avanzados</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h3>Desventajas</h3>
+                            <ul>
+                                <li>Menos útil si no usas Jira</li>
+                                <li>Comunidad más pequeña</li>
+                                <li>Menos características para proyectos open-source</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section>
+        <h2 class="section-title">Tabla Comparativa</h2>
+        <table class="comparison-table">
+            <thead>
+            <tr>
+                <th class="feature-col">Característica</th>
+                <th class="github-col">GitHub</th>
+                <th class="gitlab-col">GitLab</th>
+                <th class="bitbucket-col">Bitbucket</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Repositorios privados (plan gratuito)</td>
+                <td>Ilimitados</td>
+                <td>Ilimitados</td>
+                <td>Ilimitados (máx. 5 usuarios)</td>
+            </tr>
+            <tr>
+                <td>Colaboradores (plan gratuito)</td>
+                <td>Ilimitados</td>
+                <td>Ilimitados</td>
+                <td>Hasta 5 usuarios</td>
+            </tr>
+            <tr>
+                <td>Integración CI/CD</td>
+                <td>GitHub Actions</td>
+                <td>GitLab CI (integrado)</td>
+                <td>Bitbucket Pipelines</td>
+            </tr>
+            <tr>
+                <td>Auto-hospedaje (self-hosted)</td>
+                <td>GitHub Enterprise</td>
+                <td>GitLab Community/Enterprise</td>
+                <td>Bitbucket Data Center</td>
+            </tr>
+            <tr>
+                <td>Hospedaje web estático</td>
+                <td>GitHub Pages</td>
+                <td>GitLab Pages</td>
+                <td><i class="fas fa-times no"></i></td>
+            </tr>
+            <tr>
+                <td>Container Registry</td>
+                <td>GitHub Container Registry</td>
+                <td>GitLab Container Registry</td>
+                <td><i class="fas fa-times no"></i></td>
+            </tr>
+            <tr>
+                <td>Wiki</td>
+                <td><i class="fas fa-check check"></i></td>
+                <td><i class="fas fa-check check"></i></td>
+                <td><i class="fas fa-check check"></i></td>
+            </tr>
+            <tr>
+                <td>Issue Tracking</td>
+                <td><i class="fas fa-check check"></i></td>
+                <td><i class="fas fa-check check"></i></td>
+                <td><i class="fas fa-check check"></i></td>
+            </tr>
+            <tr>
+                <td>Boar
